@@ -1,0 +1,7 @@
+Status code: 200
+	Date : Fri, 01 Dec 2017 16:00:30 GMTStatus code: 200
+	Server : Apache/2.2.3 (CentOS)Status code: 200
+	X-Powered-By : PHP/5.2.10Status code: 200
+	X-UA-Compatible : IE=EmulateIE7Status code: 200
+	Connection : closeStatus code: 200
+	Content-Type : text/html; charset=UTF-8

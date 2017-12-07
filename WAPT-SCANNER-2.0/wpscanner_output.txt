@@ -1,0 +1,20 @@
+_______________________________________________________________ 
+ _    _               _                                         
+| |  | |             | |                                        
+| |  | | ___  _ __ __| |_ __  _ __ ___  ___ ___  ___ __ _ _ __  
+| |/\| |/ _ \| '__/ _` | '_ \| '__/ _ \/ __/ __|/ __/ _` | '_ \ 
+\  /\  / (_) | | | (_| | |_) | | |  __/\__ \__ \ (_| (_| | | | |
+ \/  \/ \___/|_|  \__,_| .__/|_|  \___||___/___/\___\__,_|_| |_|
+                       | |                                      
+                       |_|                                      
+ WordPress scanner based on wpscan work - @pentest_swissky      
+_______________________________________________________________ 
+[0m[+] URL: http://infinitedefense.org[0m
+[0m[+] robots.txt available under: http://infinitedefense.org/robots.txt [0m
+[0m[+] 	Interesting entry from robots.txt: Disallow: /wp-admin/[0m
+[0m[+] license.txt available under: http://infinitedefense.org/license.txt [0m
+
+[1m[i] Enumerating Wordpress users[0m
+[0m[+] 	Identified the following user : 1, admin, admin[0m
+
+[91m[!] WordPress version 4.8.3 identified from advanced fingerprinting[0m

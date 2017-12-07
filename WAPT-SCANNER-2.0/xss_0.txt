@@ -1,0 +1,1 @@
+Possible vulnerability found:  (i) GET parameter 'word' appears to be XSS vulnerable (">.xss.<", outside of tags, no filtering)

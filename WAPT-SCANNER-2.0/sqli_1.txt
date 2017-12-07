@@ -1,0 +1,1 @@
+ URL IS VULNERABLE WITH SQL INJECTION http://www.finvent.com/details.php?id=20'

@@ -1,0 +1,7 @@
+tld
+os
+io
+urllib
+bs4
+lxml
+mechanize
