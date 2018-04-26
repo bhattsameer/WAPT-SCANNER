@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 import cookielib, optparse, random, re, string, urllib, urllib2, urlparse
 
-def create_report(data):
-    Write_file('xss_0.txt', data)
+#def create_report(data):
+ #   Write_file('xss_0.txt', data)
 
-def Write_file(path, data):
-    f = open(path, 'w')
-    f.write(data)
+#def Write_file(path, data):
+ #   f = open(path, 'w')
+  #  f.write(data)
 
 NAME, VERSION, AUTHOR, LICENSE = "xss scanner", "0.1", "@xss", "public"
 
@@ -55,7 +55,7 @@ def scan_page(url, data=None):
     original = re.sub(DOM_FILTER_REGEX, "", _retrieve_content(url, data))
     dom = max(re.search(_, original) for _ in DOM_PATTERNS)
     if dom:
-        create_report(" (i) page itself appears to be XSS vulnerable (DOM) (o) ...%s..." % dom.group(0))
+        print(" (i) page itself appears to be XSS vulnerable (DOM) (o) ...%s..." % dom.group(0))
         retval = True
     try:
         for phase in (GET, POST):
@@ -73,11 +73,11 @@ def scan_page(url, data=None):
                                 context = re.search(regex % {"chars": re.escape(sample.group(0))}, re.sub(content_removal_regex or "", "", content), re.I)
                                 if context and not found and sample.group(1).strip():
                                     if _contains(sample.group(1), condition):
-                                        create_report("Possible vulnerability found:  (i) %s parameter '%s' appears to be XSS vulnerable (%s)" % (phase, match.group("parameter"), info % dict((("filtering", "no" if all(char in sample.group(1) for char in LARGER_CHAR_POOL) else "some"),))))
+                                        print("Possible vulnerability found:  (i) %s parameter '%s' appears to be XSS vulnerable (%s)" % (phase, match.group("parameter"), info % dict((("filtering", "no" if all(char in sample.group(1) for char in LARGER_CHAR_POOL) else "some"),))))
                                         found = retval = True
                                     break
         if not usable:
-            create_report(" (x) no usable GET/POST parameters found")
+            print(" (x) no usable GET/POST parameters found")
     except KeyboardInterrupt:
         print "\r (x) Ctrl-C pressed"
     return retval
