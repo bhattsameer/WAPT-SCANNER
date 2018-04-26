@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 import cookielib, optparse, random, re, string, urllib, urllib2, urlparse
 
+def create_report(data):
+    Write_file('xss_0.txt', data)
+
+def Write_file(path, data):
+    f = open(path, 'w')
+    f.write(data)
+
 NAME, VERSION, AUTHOR, LICENSE = "xss scanner", "0.1", "@xss", "public"
 
 SMALLER_CHAR_POOL    = ('<', '>')                                                           # characters used for XSS tampering of parameter values (smaller set - for avoiding possible SQLi errors)
@@ -48,8 +55,7 @@ def scan_page(url, data=None):
     original = re.sub(DOM_FILTER_REGEX, "", _retrieve_content(url, data))
     dom = max(re.search(_, original) for _ in DOM_PATTERNS)
     if dom:
-        print " (i) page itself appears to be XSS vulnerable (DOM)"
-        print "  (o) ...%s..." % dom.group(0)
+        create_report(" (i) page itself appears to be XSS vulnerable (DOM) (o) ...%s..." % dom.group(0))
         retval = True
     try:
         for phase in (GET, POST):
@@ -67,11 +73,11 @@ def scan_page(url, data=None):
                                 context = re.search(regex % {"chars": re.escape(sample.group(0))}, re.sub(content_removal_regex or "", "", content), re.I)
                                 if context and not found and sample.group(1).strip():
                                     if _contains(sample.group(1), condition):
-                                        print " (i) %s parameter '%s' appears to be XSS vulnerable (%s)" % (phase, match.group("parameter"), info % dict((("filtering", "no" if all(char in sample.group(1) for char in LARGER_CHAR_POOL) else "some"),)))
+                                        create_report("Possible vulnerability found:  (i) %s parameter '%s' appears to be XSS vulnerable (%s)" % (phase, match.group("parameter"), info % dict((("filtering", "no" if all(char in sample.group(1) for char in LARGER_CHAR_POOL) else "some"),))))
                                         found = retval = True
                                     break
         if not usable:
-            print " (x) no usable GET/POST parameters found"
+            create_report(" (x) no usable GET/POST parameters found")
     except KeyboardInterrupt:
         print "\r (x) Ctrl-C pressed"
     return retval
@@ -86,16 +92,17 @@ try:
     	print "--------XSS Scanner--------"
     	print "\n"
     	parser = optparse.OptionParser(version=VERSION)
-    	parser.add_option("-u", "--url", dest="url", help="Target URL (e.g. \"http://www.target.com/page.php?id=1\")")
+    	#parser.add_option("-u", "--url", dest="url", help="Target URL (e.g. \"http://www.target.com/page.php?id=1\")")
     	parser.add_option("--data", dest="data", help="POST data (e.g. \"query=test\")")
     	parser.add_option("--cookie", dest="cookie", help="HTTP Cookie header value")
     	parser.add_option("--user-agent", dest="ua", help="HTTP User-Agent header value")
     	parser.add_option("--referer", dest="referer", help="HTTP Referer header value")
     	parser.add_option("--proxy", dest="proxy", help="HTTP proxy address (e.g. \"http://127.0.0.1:8080\")")
     	options, _ = parser.parse_args()
-    	if options.url:
+    	url = raw_input("Enter url with paramters: 	")
+    	if url:
         	init_options(options.proxy, options.cookie, options.ua, options.referer)
-        	result = scan_page(options.url if options.url.startswith("http") else "http://%s" % options.url, options.data)
+        	result = scan_page(url if url.startswith("http") else "http://%s" % url, options.data)
         	print "\nscan results: %s vulnerabilities found" % ("possible" if result else "no")
     	else:
         	parser.print_help()
